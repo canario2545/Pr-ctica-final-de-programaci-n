@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taza de cambio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f3f3f3;
+    }
+
+    #currencyForm {
+      max-width: 400px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    select, input[type="number"], input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <form action="post" id="currencyForm">
+    <label for="currency">Seleccione la moneda que quiere cambiar:</label><br>
+    <select id="currency" name="currency">
+      <option value="1">DOLAR</option>
+      <option value="2">RUBLO</option>
+      <option value="3">MEX</option>
+      <option value="4">EURO</option>
+    </select><br>
+    <label for="amount">Ingrese la cantidad a cambiar:</label><br>
+    <input type="number" id="amount" name="amount"><br>
+    <input type="submit" value="Calcular">
+    <br>
+    <div id="result"></div>
+  </form>
+
+  <script>
+    function calcularTotal(currency, amount) {
+      let USD = 58.65;
+      let MEX = 3.42;
+      let RUB = 0.64;
+      let EUR = 63.21;
+      let total = 0;
+      let message = "";
+
+      switch (currency) {
+        case "1":
+          total = amount * USD;
+          if (total > 10000 && total < 20000) {
+            total *= 1.1;
+          } else {
+            total *= 1.15;
+          }
+          message = `Su taza de cambio fue de ${USD.toFixed(2)}`;
+          break;
+        case "2":
+          total = amount * RUB;
+          message = `Su taza de cambio fue de ${RUB.toFixed(2)}`;
+          break;
+        case "3":
+          total = amount * MEX;
+          message = `Su taza de cambio fue de ${MEX.toFixed(2)}`;
+          break;
+        case "4":
+          total = amount * EUR;
+          message = `Su taza de cambio fue de ${EUR.toFixed(2)}`;
+          break;
+        default:
+          message = "Moneda no válida";
+          break;
+      }
+
+      return { total, message };
+    }
+
+    document.getElementById("currencyForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      let currency = document.getElementById("currency").value;
+      let amount = parseInt(document.getElementById("amount").value);
+
+      let result = calcularTotal(currency, amount);
+
+      document.getElementById("result").innerHTML = `Total: ${result.total.toFixed(2)}<br>${result.message}`;
+    });
+  </script>
+</body>
+</html>

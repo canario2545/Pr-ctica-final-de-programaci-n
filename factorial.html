@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factorial Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        input[type="number"] {
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100px;
+        }
+
+        input[type="submit"] {
+            padding: 8px 20px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        span#resultado {
+            font-weight: bold;
+            color: #007bff;
+            margin-top: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <form onsubmit="event.preventDefault(); fact()">
+        <input type="number" id="valor1" required>
+        <input type="submit" value="Factorizar">
+        <span id="resultado"></span>
+    </form>
+
+    <script>
+        function fact() {
+            let x = parseFloat(document.getElementById("valor1").value);
+
+            let fact1 = 1;
+            let fact2 = 1;
+
+            for (let i = 1; i <= x; i++) {
+                fact2 = fact2 * fact1; 
+                fact1 = fact1 + 1;
+            }
+            let resultado = fact2;
+            document.getElementById("resultado").innerText = "El resultado es: " + resultado;
+        }
+    </script>
+</body>
+</html>
