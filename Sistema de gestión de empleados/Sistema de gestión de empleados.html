@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SDG_empleados</title>
+  <style>
+    /* Estilos para el encabezado */
+    header {
+      text-align: center;
+    }
+
+    header h2 {
+      margin: 0;
+    }
+
+    /* Estilos para el formulario de registro */
+    .empleados-form {
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilos para la tabla de empleados */
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+      padding: 8px;
+      text-align: center;
+    }
+
+    .table th {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .table td {
+      background-color: #fff;
+    }
+
+    /* Estilos para el botón de eliminar */
+    .btn-danger {
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-danger:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <header class="container-fluid bg-success p-3">
+    <h2 class="text-white">Sistemas de gestión de empleados</h2>
+  </header>
+  <main class="d-grid container-fluid">
+    <div class="row p-4">
+      <form action="" class="empleados-form  col-12 col-lg-4 p-4 mx-auto mx-lg-0">
+        <h3 class="text-capitalize text-center">Registro de empleados</h2>
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre:</label>
+          <input
+            type="text"
+            name=""
+            id="nombre"
+            class="form-control"
+            placeholder=""
+            aria-describedby="helpId"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="apellidos" class="form-label">Apellidos:</label>
+          <input
+            type="text"
+            name=""
+            id="apellidos"
+            class="form-control"
+            placeholder=""
+            aria-describedby="helpId"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="cargo" class="form-label">Rol:</label>
+
+          <select class="form-select form-select-md form-control" name="" id="cargo">
+            <option value="" selected hidden>Selecciona un cargo</option>
+            <option value="SEO">SEO</option>
+            <option value="Desarrollador de Software">Desarrollador de Software</option>
+            <option value="Especialista en Marketing Digital">Especialista en Marketing Digital</option>
+            <option value="QA">QA</option>
+            <option value="Diseñador Gráfico">Diseñador Gráfico</option>
+            <option value="Analista de Datos">Analista de Datos</option>
+            <option value="Administrador de Redes">Administrador de Redes</option>
+            <option value="Gerente de Ventas">Gerente de Ventas</option>
+            <option value="Ingeniero de Ciberseguridad">Ingeniero de Ciberseguridad</option>
+            <option value="Gerente de Proyectos">Gerente de Proyectos</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="salario" class="form-label">Salario:</label>
+          <input
+            type="number"
+            name=""
+            id="salario"
+            class="form-control"
+            placeholder=""
+            aria-describedby="helpId"
+          />
+        </div>
+        
+        <div class="mb-3">
+          <button class="btn btn-success w-100">Agregar</button>
+        </div>
+      </form>
+
+      <section class="col-12 col-lg-8  p-lg-4">
+        <h3 class="text-center m-3">Lista de empleados</h3>
+        <div
+          class="table-responsive"
+        >
+          <table
+            class="table table-primary "
+          >
+            <thead class="">
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellidos</th>
+                <th scope="col">Rol</th>
+                <th scope="col">Salario</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+             
+            </tbody>
+          </table>
+        </div>
+        <div class="text-end p-2">
+          <span class="fs-5 pago-total">Total a pagar de sueldo: 0 </span>
+        </div>
+      </section>
+     </div>
+  </main> 
+  <script>
+    const form = document.querySelector(".empleados-form");
+    const empleadosContenedor = document.querySelector("#tbody");
+    const pagoInfo = document.querySelector(".pago-total");
+
+    class Empleado {
+      constructor(nombre, apellidos, cargo, salario) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.cargo = cargo;
+        this.salario = salario;
+      }
+    }
+
+    class Empresa {
+      constructor() {
+        this.lista = [];
+      }
+      mostrarEmpleados() {
+        empleadosContenedor.innerHTML = "";
+
+        this.lista.forEach((empleado, index) => {
+          let empleadoRow = document.createElement("tr");
+
+          empleadoRow.innerHTML = `
+            <td class="text-capitalize">${empleado.nombre}</td>
+            <td class="text-capitalize">${empleado.apellidos}</td>
+            <td class="text-capitalize">${empleado.cargo}</td>
+            <td class="text-capitalize">RD$${empleado.salario}</td>
+            <td><button class="btn btn-danger btn-sm" onclick="eliminarEmpleado(${index})">Eliminar</button></td>
+          `;
+
+          empleadosContenedor.appendChild(empleadoRow);
+        });
+      }
+      agregarEmpleado(empleado) {
+        this.lista.push(empleado);
+      }
+      eliminarEmpleado(index) {
+        this.lista.splice(index, 1);
+      }
+      totalPago() {
+        let total = 0;
+        this.lista.forEach((empleado) => {
+          total += parseInt(empleado.salario);
+        });
+        return total;
+      }
+    }
+
+    let empresa = new Empresa();
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const nombre = document.querySelector("#nombre");
+      const apellidos = document.querySelector("#apellidos");
+      const cargo = document.querySelector("#cargo");
+      const salario = document.querySelector("#salario");
+      const inputs = document.querySelectorAll(".form-control");
+
+      let error = false;
+      inputs.forEach((inp) => {
+        if (inp.value.trim() === "") {
+          inp.classList.add("is-invalid");
+          error = true;
+        } else {
+          inp.classList.remove("is-invalid");
+        }
+      });
+
+      if (error) {
+        return;
+      }
+
+      let empleado = new Empleado(
+        nombre.value.trim(),
+        apellidos.value.trim(),
+        cargo.value.trim(),
+        salario.value.trim()
+      );
+      empresa.agregarEmpleado(empleado);
+      empresa.mostrarEmpleados();
+
+      pagoInfo.textContent = `Total a pagar de sueldo: RD$${empresa.totalPago()}`;
+    });
+
+    function eliminarEmpleado(index) {
+      empresa.eliminarEmpleado(index);
+      empresa.mostrarEmpleados();
+      pagoInfo.textContent = `Total a pagar de sueldo: RD$${empresa.totalPago()}`;
+    }
+  </script>
+</body>
+</html>

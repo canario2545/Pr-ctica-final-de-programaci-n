@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de ecuación cuadrática</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="button"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <form action="post">
+        <input type="number" id="num1" required placeholder="Ingrese a">
+        <input type="number" id="num2" required placeholder="Ingrese b">
+        <input type="number" id="num3" required placeholder="Ingrese c">
+        <input type="button" id="Calculadora" value="Calcular" onclick="formula()">
+        <p id="resultado"></p>
+    </form>
+
+    <script>
+        function formula() {
+            let a = parseFloat(document.getElementById("num1").value);
+            let b = parseFloat(document.getElementById("num2").value);
+            let c = parseFloat(document.getElementById("num3").value);
+            let resultado = (b * b - 4 * a * c);
+            let solucion;
+
+            if (resultado < 0) {
+                alert("Sin solución real");
+            } else {
+                let x1 = (-b + Math.sqrt(resultado)) / (2 * a);
+                let x2 = (-b - Math.sqrt(resultado)) / (2 * a);
+                solucion = "<h1>El resultado es:</h1><br><h2>x1 = " + x1 + "</h2><h2>x2 = " + x2 + "</h2>";
+            }
+            document.getElementById("resultado").innerHTML = solucion;
+        }
+    </script>
+</body>
+</html>
